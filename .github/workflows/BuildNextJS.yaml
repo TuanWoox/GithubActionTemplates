@@ -1,0 +1,46 @@
+name: Build NextJS
+on:
+    workflow_call:
+        inputs:
+            node_version:
+                required: true
+                type: string
+            build_context:
+                required: false
+                type: string
+                default: "."
+            package_manager:
+                required: false
+                type: string
+                default: "npm"
+jobs:
+    build_nextjs:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v6
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{inputs.node_version}}
+                  cache: ${{inputs.package_manager}}
+                  cache-dependency-path: ${{inputs.build_context}}/package-lock.json
+            - name: Install dependencies
+              run: |
+                  cd ${{inputs.build_context}}
+                  if [ "${{inputs.package_manager}}" = "npm" ]; then
+                    npm ci
+                  elif [ "${{inputs.package_manager}}" = "yarn" ]; then
+                    yarn install --frozen-lockfile
+                  elif [ "${{inputs.package_manager}}" = "pnpm" ]; then
+                    npm install -g pnpm
+                    pnpm install --frozen-lockfile
+                  fi
+            - name: Run linter
+              run: |
+                  cd ${{inputs.build_context}}
+                  ${{inputs.package_manager}} run lint
+            - name: Build project
+              run: |
+                  cd ${{inputs.build_context}}
+                  ${{inputs.package_manager}} run build

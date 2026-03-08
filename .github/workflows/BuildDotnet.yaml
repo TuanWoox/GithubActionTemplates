@@ -3,11 +3,13 @@ on:
     workflow_call:
         inputs:
             dotnet_version:
-                required: true
+                required: false
                 type: string
+                default: "9.0.x"
             build_context:
-                required: true
+                required: false
                 type: string
+                default: "."
 jobs:
     build_dotnet:
         runs-on: ubuntu-latest
