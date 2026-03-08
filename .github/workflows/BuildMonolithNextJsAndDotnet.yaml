@@ -1,4 +1,4 @@
-name: Build Full Stack App
+name: Build Monolith Full Stack NextJs and Dotnet App
 on:
     workflow_call:
         inputs:
@@ -10,7 +10,7 @@ on:
             dotnet_context:
                 required: false
                 type: string
-                default: "./backend"
+                default: "./Backend"
             # Next.js inputs
             node_version:
                 required: false
@@ -19,7 +19,7 @@ on:
             nextjs_context:
                 required: false
                 type: string
-                default: "./frontend"
+                default: "./Frontend"
             package_manager:
                 required: false
                 type: string

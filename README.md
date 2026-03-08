@@ -68,7 +68,7 @@ jobs:
       package_manager: 'npm'
 ```
 
-### Build Full Stack App
+### Build Monolith Full Stack NextJs and Dotnet App
 
 **File:** `.github/workflows/BuildFullStack.yaml`
 
