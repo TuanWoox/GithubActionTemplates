@@ -1,0 +1,24 @@
+name: Build Dotnet
+on:
+    workflow_call:
+        inputs:
+            dotnet_version:
+                required: true
+                type: string
+            build_context:
+                required: true
+                type: string
+jobs:
+    build_dotnet:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v6
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: ${{inputs.dotnet_version}}
+            - name: Restore package dependency
+              run: dotnet restore ${{inputs.build_context}}
+            - name: Build project
+              run: dotnet build ${{inputs.build_context}} --configuration Release --no-restore
