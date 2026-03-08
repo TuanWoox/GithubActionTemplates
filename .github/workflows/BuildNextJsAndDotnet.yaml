@@ -1,0 +1,39 @@
+name: Build Full Stack App
+on:
+    workflow_call:
+        inputs:
+            # .NET inputs
+            dotnet_version:
+                required: false
+                type: string
+                default: "8.0.x"
+            dotnet_context:
+                required: false
+                type: string
+                default: "./backend"
+            # Next.js inputs
+            node_version:
+                required: false
+                type: string
+                default: "20.x"
+            nextjs_context:
+                required: false
+                type: string
+                default: "./frontend"
+            package_manager:
+                required: false
+                type: string
+                default: "npm"
+jobs:
+    build_backend:
+        uses: ./.github/workflows/BuildDotNet.yaml
+        with:
+            dotnet_version: ${{inputs.dotnet_version}}
+            build_context: ${{inputs.dotnet_context}}
+
+    build_frontend:
+        uses: ./.github/workflows/BuildNextJS.yaml
+        with:
+            node_version: ${{inputs.node_version}}
+            build_context: ${{inputs.nextjs_context}}
+            package_manager: ${{inputs.package_manager}}

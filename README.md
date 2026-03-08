@@ -68,6 +68,39 @@ jobs:
       package_manager: 'npm'
 ```
 
+### Build Full Stack App
+
+**File:** `.github/workflows/BuildFullStack.yaml`
+
+A reusable workflow that builds both .NET backend and Next.js frontend in parallel. This workflow reuses the BuildDotNet and BuildNextJS workflows.
+
+**Inputs:**
+- `dotnet_version` (optional, string, default: `8.0.x`): The .NET SDK version to use
+- `dotnet_context` (optional, string, default: `./backend`): Path to the .NET project
+- `node_version` (optional, string, default: `20.x`): The Node.js version to use
+- `nextjs_context` (optional, string, default: `./frontend`): Path to the Next.js project
+- `package_manager` (optional, string, default: `npm`): Package manager to use (`npm`, `yarn`, or `pnpm`)
+
+**Usage Example:**
+
+```yaml
+name: CI Build Full Stack
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    uses: TuanWoox/GithubActionTemplates/.github/workflows/BuildFullStack.yaml@main
+    with:
+      dotnet_version: '8.0.x'
+      dotnet_context: './backend'
+      node_version: '20.x'
+      nextjs_context: './frontend'
+      package_manager: 'npm'
+```
+
 ## 🎯 Custom Actions
 
 Coming soon...
